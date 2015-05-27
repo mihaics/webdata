@@ -74,7 +74,10 @@ public class WebSiteScraper {
 		for (Element link : links) {
 		String attribute=link.attr("class");
 		if(attribute.equalsIgnoreCase(classname)){
-			logger.log(Level.INFO, "Link product is: "+link.toString());
+			logger.log(Level.INFO, "link.toString"+link.toString());
+			logger.log(Level.INFO, "link.childNodeSize: "+link.childNodeSize());
+			logger.log(Level.INFO, "link.data: "+link.data());
+			logger.log(Level.INFO, "link.attributes: "+link.attributes());
 		   }
 		}
 		
