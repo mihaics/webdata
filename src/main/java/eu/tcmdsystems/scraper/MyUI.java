@@ -103,7 +103,9 @@ public class MyUI extends UI {
           WebSiteScraper scraper = new WebSiteScraper(url);
      	  title_label.setValue(scraper.getDocumetTitle());
      	  
-     	 logger.log(Level.INFO,"JSON Links: "+scraper.getElementLinks());
+     	  logger.log(Level.INFO,"JSON Links: "+scraper.getElementLinks());
+     	  scraper.getClassLinks("product-container js-product-container");
+     	  
      		
 	}
 

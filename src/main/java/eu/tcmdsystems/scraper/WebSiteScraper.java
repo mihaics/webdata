@@ -56,22 +56,31 @@ public class WebSiteScraper {
 		//Iterate links and print link attributes. 
 		for (Element link : links) {
 			
-			//logger.log(Level.INFO, "Link attributes: "+link.attributes().toString());
-			logger.log(Level.INFO, "Link attributes class: "+link.attr("class").toString());
+			
 			rez.addProperty(link.text(),link.attr("href"));
 					
 		
 		} 
 		
-		links = webdoc.select("a");
-		for (Element link : links) {
-		String attribute=link.attr("class");
-		if(attribute.equalsIgnoreCase("product-container js-product-container")){
-			logger.log(Level.INFO, "Link product is: "+link.toString());
-		   }
-		}
 		
 		return rez.toString();
 	}
 
+	public String getClassLinks(String classname){
+		
+		if(classname.isEmpty()) classname="product-container js-product-container";
+			
+		Elements links = webdoc.select("a");
+		for (Element link : links) {
+		String attribute=link.attr("class");
+		if(attribute.equalsIgnoreCase(classname)){
+			logger.log(Level.INFO, "Link product is: "+link.toString());
+		   }
+		}
+		
+		
+		return classname;
+		
+	}
+	
 }
