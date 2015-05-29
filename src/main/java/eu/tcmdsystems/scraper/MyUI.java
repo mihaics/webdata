@@ -14,11 +14,17 @@ import javax.servlet.annotation.WebServlet;
 
 
 
+
+
+
+import utils.gsonContainer.IndexedGsonContainer;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
+import com.vaadin.data.Container;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.validator.RegexpValidator;
 import com.vaadin.event.ShortcutAction;
@@ -27,6 +33,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -49,8 +56,9 @@ public class MyUI extends UI {
 	
 	String url = "";
 	TextField tf;
-	Label title_label; 
-	 boolean valid_url = false;
+	Label title_label;
+	Table linkTable;
+	boolean valid_url = false;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -93,10 +101,13 @@ public class MyUI extends UI {
 		
     	   });
         
-       
+        linkTable = new Table("Links");
+        
        
         layout.addComponent(tf);
         layout.addComponent(title_label);
+        layout.addComponent(linkTable);
+        
        
      
     	
@@ -117,6 +128,8 @@ public class MyUI extends UI {
      	  //returns an JsonObject with all the links from page
      	  
      	  JsonObject pagelinks = scraper.getElementLinks();
+     	  
+     	  /*
      	  Set<Entry<String, JsonElement>> linkset = pagelinks.entrySet();
      	  Iterator<Entry<String, JsonElement>> it = linkset.iterator();
      	  while(it.hasNext()){
@@ -124,7 +137,11 @@ public class MyUI extends UI {
      		  logger.log(Level.INFO,"JSON Link String: "+el.getKey());
      		 logger.log(Level.INFO,"JSON Link Element: "+el.getValue().toString());
      	  }
-     	  
+     	  */
+     	 Container container = new IndexedGsonContainer(pagelinks);
+     	 linkTable.setContainerDataSource(container);
+     	 linkTable.setSizeFull();
+     	 
      	  scraper.getClassLinks("product-container js-product-container");
      	  scraper.getElementsSize();
      	 // scraper.getAllAttributes();
@@ -136,5 +153,10 @@ public class MyUI extends UI {
 	@WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
     @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
     public static class MyUIServlet extends VaadinServlet {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -1004092819267917804L;
     }
 }

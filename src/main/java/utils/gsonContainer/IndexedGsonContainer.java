@@ -15,23 +15,32 @@ public class IndexedGsonContainer extends IndexedContainer {
 	private static final long serialVersionUID = 5097381990779655300L;
 
 	@SuppressWarnings("unchecked")
-	public void IndexedJsonContainer(JsonObject gson) {
+	public  IndexedGsonContainer(JsonObject gson) {
 
 		try {
 
 			Set<Entry<String, JsonElement>> gsonitems = gson.entrySet();
 			Iterator<Entry<String, JsonElement>> it = gsonitems.iterator();
+			
 			while (it.hasNext()) {
 				//init item
+				
 				Entry<String, JsonElement> gel = it.next();
-				Item item = this.getItem(this.addItem());
+				
 				// get the key/value pair
 				String key = gel.getKey();// key
 				String value = gel.getValue().toString();// value
 				//add to item
-				if (!this.getAllItemIds().contains(key))
-					this.addContainerProperty(key, String.class, "");
-				item.getItemProperty(key).setValue(value);
+				Object itemId = addItem();
+				Item item = this.getItem(itemId);
+				
+					
+				this.addContainerProperty("Key", String.class, "");
+				this.addContainerProperty("Value", String.class, "");
+				item.getItemProperty("Key").setValue(key);
+				item.getItemProperty("Value").setValue(value);
+				
+				
 
 			}
 
