@@ -17,7 +17,7 @@ import javax.servlet.annotation.WebServlet;
 
 
 
-import utils.gsonContainer.IndexedGsonContainer;
+import utils.gsonContainer.WebLinksContainer;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -138,7 +138,7 @@ public class MyUI extends UI {
      		 logger.log(Level.INFO,"JSON Link Element: "+el.getValue().toString());
      	  }
      	  */
-     	 Container container = new IndexedGsonContainer(pagelinks);
+     	 Container container = new WebLinksContainer(pagelinks);
      	 linkTable.setContainerDataSource(container);
      	 linkTable.setSizeFull();
      	 

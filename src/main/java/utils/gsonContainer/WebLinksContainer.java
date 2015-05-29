@@ -8,14 +8,14 @@ import com.google.gson.JsonObject;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.IndexedContainer;
 
-public class IndexedGsonContainer extends IndexedContainer {
+public class WebLinksContainer extends IndexedContainer {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5097381990779655300L;
 
 	@SuppressWarnings("unchecked")
-	public  IndexedGsonContainer(JsonObject gson) {
+	public  WebLinksContainer(JsonObject gson) {
 
 		try {
 
