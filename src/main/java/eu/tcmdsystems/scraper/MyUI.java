@@ -1,5 +1,8 @@
 package eu.tcmdsystems.scraper;
 
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -7,6 +10,12 @@ import javax.servlet.annotation.WebServlet;
 
 
 
+
+
+
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
@@ -39,8 +48,8 @@ public class MyUI extends UI {
 	  
 	
 	String url = "";
-	 TextField tf;
-	 Label title_label; 
+	TextField tf;
+	Label title_label; 
 	 boolean valid_url = false;
 
     @Override
@@ -53,6 +62,7 @@ public class MyUI extends UI {
        
        
        tf = new TextField("Enter web address:");
+      
        tf.setWidth("300px");
        tf.addValidator(new RegexpValidator(url_regexp, "Invalid URL"));
        
@@ -77,6 +87,7 @@ public class MyUI extends UI {
     	    		getMyURL();
     	       		
     	       	}
+    	        tf.setValue(url);
     	   }
 
 		
@@ -103,8 +114,20 @@ public class MyUI extends UI {
           WebSiteScraper scraper = new WebSiteScraper(url);
      	  title_label.setValue(scraper.getDocumetTitle());
      	  
-     	  logger.log(Level.INFO,"JSON Links: "+scraper.getElementLinks());
+     	  //returns an JsonObject with all the links from page
+     	  
+     	  JsonObject pagelinks = scraper.getElementLinks();
+     	  Set<Entry<String, JsonElement>> linkset = pagelinks.entrySet();
+     	  Iterator<Entry<String, JsonElement>> it = linkset.iterator();
+     	  while(it.hasNext()){
+     		  Entry<String, JsonElement> el = it.next();
+     		  logger.log(Level.INFO,"JSON Link String: "+el.getKey());
+     		 logger.log(Level.INFO,"JSON Link Element: "+el.getValue().toString());
+     	  }
+     	  
      	  scraper.getClassLinks("product-container js-product-container");
+     	  scraper.getElementsSize();
+     	 // scraper.getAllAttributes();
      	  
      		
 	}
