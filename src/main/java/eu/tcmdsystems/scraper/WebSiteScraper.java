@@ -43,17 +43,10 @@ public class WebSiteScraper {
 		return elementsSize;
 	}
 
-	public void getAllAttributes() {
-		Elements allElements = webdoc.getAllElements();
-		for (Element oneElement : allElements) {
-			logger.log(Level.INFO, "elementAttributes: "
-					+ oneElement.attributes().toString());
-		}
-
-	}
+	
 
 	
-	public JsonObject getElementLinks() {
+	public JsonObject getWebPageLinks() {
 		/**
 		 * @return an JsonObject containing all the web links from given page
 		 */
@@ -70,34 +63,37 @@ public class WebSiteScraper {
 	}
 
 	
-	public Elements getClassElements(String classname) {
+	public Elements getLinkElements() {
 
-		if ((classname == null || classname.isEmpty()))
-			classname = "product-container js-product-container";
+		
 
 		Elements links = webdoc.select("a");
 		// logger.log(Level.INFO, "links.size: "+links.size());
-
+		
+		/*links = webdoc.select("a");
 		for (Element link : links) {
-			String attribute = link.attr("class");
-			// logger.log(Level.INFO, "link.attr: "+attribute);
-
+		String attribute=link.attr("class");
+		if(attribute.equalsIgnoreCase(classname)){
+			logger.log(Level.INFO, "Product is: "+link.toString());
+		   }
+		}
+		
+		for (Element link : links) {
+			if(link.childNodeSize()==6){
+				link.child(1).text();
+				for(int i=0;i<6;i++){
+					logger.log(Level.INFO, "Child node "+i+": "+link.childNode(i).toString());
+				}
+			}
 			// listing-pagination-next - for pagination
 			// product-container js-product-container for products
 		}
-
+*/
 		return links;
 
 	}
 
-	public void getClassLinks(String string) {
-		// TODO Auto-generated method stub
-		Elements products = getClassElements(string);
-
-		for (Element product : products) {
-			logger.log(Level.INFO, "product.text: " + product.text());
-		}
-	}
+	
 
 	public Document getWebdoc() {
 		return webdoc;

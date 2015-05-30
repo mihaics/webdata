@@ -98,7 +98,7 @@ public class MyUI extends UI {
 		title_label.setValue(scraper.getDocumetTitle());
 
 		// returns an JsonObject with all the links from page
-		JsonObject pagelinks = scraper.getElementLinks();
+		JsonObject pagelinks = scraper.getWebPageLinks();
 
 		Container container = new WebLinksContainer(pagelinks);
 		linkTable.setContainerDataSource(container);
@@ -106,7 +106,7 @@ public class MyUI extends UI {
 		linkTable.setSizeFull();
 		linkTable.setVisible(true);
 
-		// scraper.getClassLinks("product-container js-product-container");
+		//scraper.getLinkElements("product-info-lite");
 		// scraper.getElementsSize();
 		// scraper.getAllAttributes();
 
