@@ -1,9 +1,18 @@
 package eu.tcmdsystems.scraper;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.servlet.annotation.WebServlet;
+
+import org.jsoup.nodes.Node;
+import org.jsoup.select.NodeVisitor;
+
 import utils.gsonContainer.WebLinksContainer;
+
 import com.google.gson.JsonObject;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
@@ -21,6 +30,8 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+
+import eu.tcmdsystems.scraper.emag.LaptopScraper;
 
 /**
  *
@@ -86,7 +97,31 @@ public class MyUI extends UI {
 		layout.addComponent(tf);
 		layout.addComponent(title_label);
 		layout.addComponent(linkTable);
+		getLaptopData();
 
+	}
+
+	private void getLaptopData() {
+		// TODO Auto-generated method stub
+		LaptopScraper laptopuri = new LaptopScraper();
+		logger.log(Level.INFO, "Docuemnt node name: "+laptopuri.getWebdoc().nodeName());
+		logger.log(Level.INFO, "Number of children nodes: "+laptopuri.getWebdoc().childNodeSize());
+
+		
+		laptopuri.getWebdoc().traverse(new NodeVisitor() {
+		    public void head(Node node, int depth) {
+		        logger.log(Level.INFO,"Entering tag: " + node.nodeName());
+		        logger.log(Level.INFO,"Node attributes: " + node.attributes());
+		        logger.log(Level.INFO,"Text: " + node.toString());
+		    }
+		    public void tail(Node node, int depth) {
+		    	logger.log(Level.INFO,"Exiting tag: " + node.nodeName());
+		    }
+		});
+		
+		
+		
+		
 	}
 
 	protected void parseMyURL() {
@@ -106,6 +141,7 @@ public class MyUI extends UI {
 		linkTable.setSizeFull();
 		linkTable.setVisible(true);
 
+		
 		//scraper.getLinkElements("product-info-lite");
 		// scraper.getElementsSize();
 		// scraper.getAllAttributes();
