@@ -110,35 +110,8 @@ public class MyUI extends UI {
 	private void getLaptopData() {
 		// TODO Auto-generated method stub
 		LaptopScraper laptopuri = new LaptopScraper();
-		logger.log(Level.INFO, "Document node name: "+laptopuri.getWebdoc().nodeName());
-		logger.log(Level.INFO, "Number of children nodes: "+laptopuri.getWebdoc().childNodeSize());
-
-		Elements pag = laptopuri.getWebdoc().getElementsByClass("pagination");
-		logger.log(Level.INFO,"Element pagination: " + pag.toString());
-		Elements link = pag.select("a[href]");
-		logger.log(Level.INFO,"href attr: " + link.attr("href")+" class attr: "+link.attr("class"));
-		
-		/*
-		laptopuri.getWebdoc().traverse(new NodeVisitor() {
-		    public void head(Node node, int depth) {
-		    	String tag = node.nodeName();
-		    	Attributes attr = node.attributes();
-		    	if( tag.equals("div") && attr.toString().contains("pagination")){
-		    		logger.log(Level.INFO,"Found pagination: " + node.toString());
-		    		
-		    	}
-		        //logger.log(Level.INFO,"Entering tag: " + node.nodeName());
-		        //logger.log(Level.INFO,"Node attributes: " + node.attributes());
-		        //logger.log(Level.INFO,"Text: " + node.toString());
-		    }
-		    public void tail(Node node, int depth) {
-		    	//logger.log(Level.INFO,"Exiting tag: " + node.nodeName());
-		    }
-		    
-		});
-		
-		
-		*/
+		logger.log(Level.INFO,"Next page url: " + laptopuri.getNextPageurl());
+		logger.log(Level.INFO,"Product data: " + laptopuri.getLaptopData());
 		
 	}
 
