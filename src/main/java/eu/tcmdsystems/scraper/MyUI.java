@@ -3,12 +3,16 @@ package eu.tcmdsystems.scraper;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.annotation.WebServlet;
 
+import org.jsoup.nodes.Attributes;
+import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
+import org.jsoup.select.Elements;
 import org.jsoup.select.NodeVisitor;
 
 import utils.gsonContainer.WebLinksContainer;
@@ -51,6 +55,8 @@ public class MyUI extends UI {
 	Label title_label;
 	Table linkTable;
 	boolean valid_url = false;
+
+	
 
 	@Override
 	protected void init(VaadinRequest vaadinRequest) {
@@ -104,23 +110,35 @@ public class MyUI extends UI {
 	private void getLaptopData() {
 		// TODO Auto-generated method stub
 		LaptopScraper laptopuri = new LaptopScraper();
-		logger.log(Level.INFO, "Docuemnt node name: "+laptopuri.getWebdoc().nodeName());
+		logger.log(Level.INFO, "Document node name: "+laptopuri.getWebdoc().nodeName());
 		logger.log(Level.INFO, "Number of children nodes: "+laptopuri.getWebdoc().childNodeSize());
 
+		Elements pag = laptopuri.getWebdoc().getElementsByClass("pagination");
+		logger.log(Level.INFO,"Element pagination: " + pag.toString());
+		Elements link = pag.select("a[href]");
+		logger.log(Level.INFO,"href attr: " + link.attr("href")+" class attr: "+link.attr("class"));
 		
+		/*
 		laptopuri.getWebdoc().traverse(new NodeVisitor() {
 		    public void head(Node node, int depth) {
-		        logger.log(Level.INFO,"Entering tag: " + node.nodeName());
-		        logger.log(Level.INFO,"Node attributes: " + node.attributes());
-		        logger.log(Level.INFO,"Text: " + node.toString());
+		    	String tag = node.nodeName();
+		    	Attributes attr = node.attributes();
+		    	if( tag.equals("div") && attr.toString().contains("pagination")){
+		    		logger.log(Level.INFO,"Found pagination: " + node.toString());
+		    		
+		    	}
+		        //logger.log(Level.INFO,"Entering tag: " + node.nodeName());
+		        //logger.log(Level.INFO,"Node attributes: " + node.attributes());
+		        //logger.log(Level.INFO,"Text: " + node.toString());
 		    }
 		    public void tail(Node node, int depth) {
-		    	logger.log(Level.INFO,"Exiting tag: " + node.nodeName());
+		    	//logger.log(Level.INFO,"Exiting tag: " + node.nodeName());
 		    }
+		    
 		});
 		
 		
-		
+		*/
 		
 	}
 
