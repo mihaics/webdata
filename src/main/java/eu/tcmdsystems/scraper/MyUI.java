@@ -109,9 +109,9 @@ public class MyUI extends UI {
 
 	private void getLaptopData() {
 		// TODO Auto-generated method stub
-		LaptopScraper laptopuri = new LaptopScraper();
-		logger.log(Level.INFO,"Next page url: " + laptopuri.getNextPageurl());
-		logger.log(Level.INFO,"Product data: " + laptopuri.getLaptopData());
+		LaptopScraper laptopuri = new LaptopScraper("http://m.emag.ro/laptopuri/p19/c");
+		logger.log(Level.INFO,"Next page url(19): " + laptopuri.getNextPageurl());
+		logger.log(Level.INFO,"Număr laptopuri: " + laptopuri.getLaptopData().size());
 		
 	}
 

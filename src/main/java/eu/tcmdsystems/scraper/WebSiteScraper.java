@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Document.OutputSettings;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -22,6 +23,7 @@ public class WebSiteScraper {
 		// TODO Auto-generated constructor stub
 		try {
 
+			
 			webdoc = Jsoup.connect(url).get();
 			logger.log(Level.INFO, "Document Nodename: " + webdoc.nodeName());// #document
 
@@ -70,25 +72,6 @@ public class WebSiteScraper {
 		Elements links = webdoc.select("a");
 		// logger.log(Level.INFO, "links.size: "+links.size());
 		
-		/*links = webdoc.select("a");
-		for (Element link : links) {
-		String attribute=link.attr("class");
-		if(attribute.equalsIgnoreCase(classname)){
-			logger.log(Level.INFO, "Product is: "+link.toString());
-		   }
-		}
-		
-		for (Element link : links) {
-			if(link.childNodeSize()==6){
-				link.child(1).text();
-				for(int i=0;i<6;i++){
-					logger.log(Level.INFO, "Child node "+i+": "+link.childNode(i).toString());
-				}
-			}
-			// listing-pagination-next - for pagination
-			// product-container js-product-container for products
-		}
-*/
 		return links;
 
 	}
