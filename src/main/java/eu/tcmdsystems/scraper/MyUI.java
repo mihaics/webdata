@@ -1,19 +1,10 @@
 package eu.tcmdsystems.scraper;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Stack;
-import java.util.function.Consumer;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.annotation.WebServlet;
-
-import org.jsoup.nodes.Attributes;
-import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
-import org.jsoup.select.Elements;
-import org.jsoup.select.NodeVisitor;
 
 import utils.gsonContainer.WebLinksContainer;
 
@@ -23,6 +14,7 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.data.Container;
 import com.vaadin.data.Validator.InvalidValueException;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.RegexpValidator;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.ShortcutListener;
@@ -36,6 +28,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import eu.tcmdsystems.scraper.emag.LaptopScraper;
+import eu.tcmdsystems.scraper.produse.LaptopGeneric;
 
 /**
  *
@@ -103,15 +96,42 @@ public class MyUI extends UI {
 		layout.addComponent(tf);
 		layout.addComponent(title_label);
 		layout.addComponent(linkTable);
-		getLaptopData();
+		 BeanItemContainer<LaptopGeneric> laptopBeans =
+		            new BeanItemContainer<LaptopGeneric>(LaptopGeneric.class);
+		 
+		laptopBeans.addAll(getLaptopData());
+		Table laptopTable = new Table("Laptopuri Emag", laptopBeans);
+		laptopTable.setSizeFull();
+		laptopTable.setImmediate(true);
+		layout.addComponent(laptopTable);
 
 	}
 
-	private void getLaptopData() {
+	private ArrayList<LaptopGeneric> getLaptopData() {
 		// TODO Auto-generated method stub
-		LaptopScraper laptopuri = new LaptopScraper("http://m.emag.ro/laptopuri/p19/c");
-		logger.log(Level.INFO,"Next page url(19): " + laptopuri.getNextPageurl());
-		logger.log(Level.INFO,"Număr laptopuri: " + laptopuri.getLaptopData().size());
+		String baseUrl = "http://www.emag.ro";
+		String pageUrl = "/laptopuri/c";
+		ArrayList<LaptopGeneric> dateLaptopuri = new ArrayList<LaptopGeneric>();	
+		
+		
+		while((pageUrl!=null || !pageUrl.isEmpty())&& pageUrl.contains("/laptopuri")){
+			
+			logger.log(Level.INFO,"Processing page: " + pageUrl);
+			LaptopScraper siteLaptopuri = new LaptopScraper(baseUrl+pageUrl);
+			logger.log(Level.INFO,"Adding laptops: " + siteLaptopuri.getLaptopData().size());
+			dateLaptopuri.addAll(siteLaptopuri.getLaptopData());
+			pageUrl = siteLaptopuri.getNextPageurl();
+			  try {
+			        Thread.sleep(5000);
+
+			      } catch (InterruptedException ie) {
+			        ie.printStackTrace();
+			      }
+			
+		}
+		 
+		logger.log(Level.INFO,"Processed : "+ dateLaptopuri.size());
+		return dateLaptopuri;
 		
 	}
 

@@ -67,25 +67,27 @@ public class LaptopScraper extends WebSiteScraper {
 			// logger.log(Level.INFO,"Product data: " + prod.toString());
 			// String producturl = prod.attr("href");
 			alaptop.setSurlProduct(prod.attr("href"));
-			logger.log(Level.INFO, "Product url: " + alaptop.getSurlProduct());
+			// logger.log(Level.INFO, "Product url: " +
+			// alaptop.getSurlProduct());
 
 			alaptop.setSurlImage(prod.getElementsByClass("img-container")
 					.select("img").attr("data-src"));
 			// String productimage =
 			// prod.getElementsByClass("img-container").select("img").attr("data-src");
-			logger.log(Level.INFO, "Product image: " + alaptop.getSurlImage());
+			// logger.log(Level.INFO, "Product image: " +
+			// alaptop.getSurlImage());
 			alaptop.setSproductTitle(prod.getElementsByClass("product-title")
 					.text());
 			// String producttitle=
 			// prod.getElementsByClass("product-title").text();
-			logger.log(Level.INFO,
-					"Product title: " + alaptop.getSproductTitle());
+			// logger.log(Level.INFO,
+			// "Product title: " + alaptop.getSproductTitle());
 			alaptop.setSproductStatus(prod.getElementsByClass(
 					"stare-disp-listing").text());
 			// String productstare=
 			// prod.getElementsByClass("stare-disp-listing").text();
-			logger.log(Level.INFO,
-					"Product status: " + alaptop.getSproductStatus());
+			// logger.log(Level.INFO,
+			// "Product status: " + alaptop.getSproductStatus());
 
 			if (prod.getElementsByClass("money-int").size() == 2) {
 
@@ -103,7 +105,8 @@ public class LaptopScraper extends WebSiteScraper {
 						"emg-discount-price").text());
 				// String discount=
 				// prod.getElementsByClass("emg-discount-price").text();
-				logger.log(Level.INFO, "Discount: " + alaptop.getSdiscount());
+				// logger.log(Level.INFO, "Discount: " +
+				// alaptop.getSdiscount());
 
 				String pricenew_int = prod.getElementsByClass("money-int")
 						.get(1).text();
@@ -119,11 +122,11 @@ public class LaptopScraper extends WebSiteScraper {
 				// String scurrency=
 				// prod.getElementsByClass("money-currency").get(0).text();
 				// logger.log(Level.INFO,"Currency: "+ scurrency);
-				logger.log(
-						Level.INFO,
-						"Pret laptop: " + alaptop.getDnewPrice() + " "
-								+ alaptop.getScurrency() + " / "
-								+ alaptop.getDoldPrice());
+				// logger.log(
+				// Level.INFO,
+				// "Pret laptop: " + alaptop.getDnewPrice() + " "
+				// + alaptop.getScurrency() + " / "
+				// + alaptop.getDoldPrice());
 			} else {
 
 				String pricenew_int = prod.getElementsByClass("money-int")
@@ -140,8 +143,9 @@ public class LaptopScraper extends WebSiteScraper {
 						.text());
 				// String scurrency=
 				// prod.getElementsByClass("money-currency").text();
-				logger.log(Level.INFO, "Pret laptop: " + alaptop.getDnewPrice()
-						+ " " + alaptop.getScurrency());
+				// logger.log(Level.INFO, "Pret laptop: " +
+				// alaptop.getDnewPrice()
+				// + " " + alaptop.getScurrency());
 
 			}
 

@@ -11,6 +11,25 @@ public class LaptopGeneric {
 	private String scurrency;
 	
 	
+	
+	public LaptopGeneric(){
+		
+	}
+	
+	public LaptopGeneric(String surlProduct, String surlImage,
+			String sproductTitle, String sproductStatus, String sdiscount,
+			double doldPrice, double dnewPrice, String scurrency) {
+		//super();
+		this.surlProduct = surlProduct;
+		this.surlImage = surlImage;
+		this.sproductTitle = sproductTitle;
+		this.sproductStatus = sproductStatus;
+		this.sdiscount = sdiscount;
+		this.doldPrice = doldPrice;
+		this.dnewPrice = dnewPrice;
+		this.scurrency = scurrency;
+	}
+	
 	public String getSurlProduct() {
 		return surlProduct;
 	}
